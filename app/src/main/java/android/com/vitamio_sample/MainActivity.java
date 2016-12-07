@@ -21,11 +21,7 @@ public class MainActivity extends Activity {
 	
     private VideoPlayLayout mVideoPlayerLayout;
     private RelativeLayout advertvideo;
-    private Vibrator mVibrator;
-    private String xoffset, yoffset;
-    private String tempcoor = "gcj02";
-    private long mSeek = -1;
-    private String currentPlayUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

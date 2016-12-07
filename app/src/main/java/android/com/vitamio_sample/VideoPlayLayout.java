@@ -20,8 +20,6 @@ import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
-//import com.ssd.android.eyt.R;
-
 
 public class VideoPlayLayout extends RelativeLayout {
 	private PlayerBackInterface mPlayerBackInterface;
