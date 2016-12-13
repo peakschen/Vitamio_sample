@@ -21,6 +21,8 @@ public class MainActivity extends Activity {
 	
     private VideoPlayLayout mVideoPlayerLayout;
     private RelativeLayout advertvideo;
+    private String urlStr;
+    private long currentSeek;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,16 @@ public class MainActivity extends Activity {
         mVideoPlayerLayout = (VideoPlayLayout) findViewById(R.id.home_video);
 
 //        String address = "http://220.181.23.202/s1/UvFuJjXR07s7t1nO/38694/v477/3/6/timdOsC5R7yf9FTPdtRqkw.mp4";
-        String str = "http://120.25.126.95:8089/vod/DEFAULT_DEFAULT0000000000000000010000121E000000001";
-//        String str1 = "http://gslb.miaopai.com/stream/oxX3t3Vm5XPHKUeTS-zbXA__.mp4";
+        urlStr /*= "http://120.25.126.95:8089/vod/DEFAULT_DEFAULT0000000000000000010000121E000000001";
+        String str1*/ = "http://gslb.miaopai.com/stream/oxX3t3Vm5XPHKUeTS-zbXA__.mp4";
 
-        mVideoPlayerLayout.PlayStart(str, 0, new PlayerBackInterface() {
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentSeek = MainApplication.currentSeek;
+        mVideoPlayerLayout.PlayStart(urlStr, currentSeek, new PlayerBackInterface() {
             @Override
             public void OnPreparedListener(io.vov.vitamio.MediaPlayer mp) {
 
@@ -91,5 +99,11 @@ public class MainActivity extends Activity {
     }
     public void cancelFullScreenChange(){
         getWindow().clearFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MainApplication.currentSeek = mVideoPlayerLayout.getSeek();
     }
 }

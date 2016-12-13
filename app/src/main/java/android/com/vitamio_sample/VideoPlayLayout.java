@@ -59,6 +59,10 @@ public class VideoPlayLayout extends RelativeLayout {
 				break;
 			case MediaPlayer.MEDIA_INFO_BUFFERING_END:
 				mVideoView.start();
+				if(mVideoView.getNeedToSeek()){
+					mVideoView.setNeedToSeek(false);
+					mVideoView.setmSeekWhenPrepared(0);
+				}
 				//pb.setVisibility(View.GONE);
 //				loadView.setBackgroundResource(R.drawable.touming);
 				loadView.setVisibility(View.GONE);

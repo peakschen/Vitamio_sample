@@ -196,6 +196,10 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
 	private Context mContext;
 	private Map<String, String> mHeaders;
 	private int mBufSize;
+
+    public void setmSeekWhenPrepared(long mSeekWhenPrepared) {
+        this.mSeekWhenPrepared = mSeekWhenPrepared;
+    }
 	private OnCompletionListener mCompletionListener = new OnCompletionListener() {
 		public void onCompletion(MediaPlayer mp) {
       Logs.d("onCompletion");
@@ -602,6 +606,9 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
     }
     if (isInPlaybackState()&& mMediaController != null &&!mMediaController.getHasPlayEnd() && !mMediaController.getHasPause()) {
       Logs.i("cgf","----VideoView--start---");
+        if(mSeekWhenPrepared > 0 && isNeedToSeek){
+            mMediaPlayer.seekTo(mSeekWhenPrepared);
+        }
       mMediaPlayer.start();
       mCurrentState = STATE_PLAYING;
     }else if(mMediaController != null &&mMediaController.getHasPause()||mMediaController.getHasPlayEnd()){
@@ -692,11 +699,19 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       return mMediaPlayer.getCurrentPosition();
     return 0;
   }
+    private boolean isNeedToSeek = false;
+    public void setNeedToSeek(boolean isNeedToSeek){
+        this.isNeedToSeek = isNeedToSeek;
+    }
+    public boolean getNeedToSeek(){
+        return isNeedToSeek;
+    }
 
   public void seekTo(long msec) {
     if (isInPlaybackState()) {
+        isNeedToSeek = true;
       mMediaPlayer.seekTo(msec);
-      mSeekWhenPrepared = 0;
+      mSeekWhenPrepared = msec;//0;
     } else {
       mSeekWhenPrepared = msec;
     }
